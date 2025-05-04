@@ -5,10 +5,10 @@ win_width = 700
 win_height = 500
 window = display.set_mode((win_width, win_height))
 display.set_caption("Maze")
-background = transform.scale(image.load("background.jpg"), (win_width, win_height))
+background = transform.scale(image.load("image.png"), (win_width, win_height))
 
 mixer.init()
-mixer.music.load("jungles.ogg")
+mixer.music.load("jungles.ogg.mp3")
 mixer.music.play()
 
 kick = mixer.Sound("kick.ogg")
@@ -82,11 +82,13 @@ class Wall(sprite.Sprite):
 
 player = Player("player.png", 40, 370, 5)
 monster = Enemy("monster.png", win_width - 70, 270, 2)
-scarb = GameSprite("scarb.png", win_width - 150, 370, 0)
+treasure = GameSprite("treasure.png", win_width - 150, 370, 0)
 
-wall1 = Wall(230, 23, 23, 50, 30, 400, 8)
-wall2 = Wall(229, 210, 38, 120, 130, 8, 350)
-wall3 = Wall(51, 229, 38, 20, 478, 450, 8)
+wall1 = Wall(102, 255, 102, 50, 30, 400, 8)
+wall2 = Wall(102, 255, 102, 120, 130, 8, 350)
+wall3 = Wall(102, 255, 102, 20, 478, 450, 8)
+wall4 = Wall(102, 255, 102, 250, 40, 8, 350)
+wall5 = Wall(102,255,102, 400, 120, 8, 350)
 
 game = True
 finish = False
@@ -103,18 +105,20 @@ while game:
 
         player.reset()
         monster.reset()
-        scarb.reset()
+        treasure.reset()
 
         wall1.draw_wall()
         wall2.draw_wall()
         wall3.draw_wall()
+        wall4.draw_wall()
+        wall5.draw_wall()
 
-        if sprite.collide_rect(player, monster) or sprite.collide_rect(player, wall1) or sprite.collide_rect(player, wall2) or sprite.collide_rect(player, wall3):
+        if sprite.collide_rect(player, monster) or sprite.collide_rect(player, wall1) or sprite.collide_rect(player, wall2) or sprite.collide_rect(player, wall3) or sprite.collide_rect(player, wall4) or sprite.collide_rect(player, wall5):
             finish = True
             window.blit(lose, (220, 200))
             kick.play()
 
-        if sprite.collide_rect(player, scarb):
+        if sprite.collide_rect(player, treasure):
             finish = True
             window.blit(win, (220, 200))
             money.play()
